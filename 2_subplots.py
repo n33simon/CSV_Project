@@ -13,7 +13,12 @@ header_row2 = next(csv_file2)
 
 
 for index, column_header in enumerate(header_row1):
-    print("Index:", index, "Column Name:", column_header)
+    #print("Index:", index, "Column Name:", column_header)
+    if column_header == "TMIN":
+        tmin1 = index
+    if column_header == "TMAX":
+        tmax1 = index
+
 
 highs1 = []
 lows1 = []
@@ -22,7 +27,13 @@ name1 = []
 
 
 for index, column_header in enumerate(header_row2):
-    print("Index:", index, "Column Name:", column_header)
+    #print("Index:", index, "Column Name:", column_header)
+    if column_header == "TMIN":
+        tmin2 = index
+    if column_header == "TMAX":
+        tmax2 = index
+
+
 
 highs2 = []
 lows2 = []
@@ -30,22 +41,26 @@ dates2 = []
 name2 = []
 
 
-# tmax = int(row[5])
-# tmin = int(row[6])
 
 
 for row in csv_file1:
-    highs1.append(int(row[5]))
-    lows1.append(int(row[6]))
-    name1.append(row[1])
-    converted_date1 = datetime.strptime(row[2], "%Y-%m-%d")
-    dates1.append(converted_date1)
+    try:
+        high1 = int(row[tmax1])
+        low1 = int(row[tmin1])
+        converted_date1 = datetime.strptime(row[2], "%Y-%m-%d")
+    except ValueError:
+        print(f"Missing data for {converted_date1}")
+    else:
+        highs1.append(int(row[5]))
+        lows1.append(int(row[6]))
+        name1.append(row[1])
+        dates1.append(converted_date1)
 
 
 for row in csv_file2:
     try:
-        high = int(row[4])
-        low = int(row[5])
+        high = int(row[tmin2])
+        low = int(row[tmax2])
         converted_date2 = datetime.strptime(row[2], "%Y-%m-%d")
     except ValueError:
         print(f"Missing data for {converted_date2}")
@@ -60,7 +75,7 @@ for row in csv_file2:
 import matplotlib.pyplot as plt
 
 
-fig, a = plt.subplots(2)
+fig, a = plt.subplots(2, sharex= True, sharey= False)
 
 plt.suptitle("Temperature comparison between " + name1[0] + " and " + name2[0])
 
