@@ -13,7 +13,7 @@ header_row2 = next(csv_file2)
 
 
 for index, column_header in enumerate(header_row1):
-    #print("Index:", index, "Column Name:", column_header)
+    # print("Index:", index, "Column Name:", column_header)
     if column_header == "TMIN":
         tmin1 = index
     if column_header == "TMAX":
@@ -27,20 +27,17 @@ name1 = []
 
 
 for index, column_header in enumerate(header_row2):
-    #print("Index:", index, "Column Name:", column_header)
+    # print("Index:", index, "Column Name:", column_header)
     if column_header == "TMIN":
         tmin2 = index
     if column_header == "TMAX":
         tmax2 = index
 
 
-
 highs2 = []
 lows2 = []
 dates2 = []
 name2 = []
-
-
 
 
 for row in csv_file1:
@@ -75,7 +72,7 @@ for row in csv_file2:
 import matplotlib.pyplot as plt
 
 
-fig, a = plt.subplots(2, sharex= True, sharey= False)
+fig, a = plt.subplots(2, sharex=True, sharey=False)
 
 plt.suptitle("Temperature comparison between " + name1[0] + " and " + name2[0])
 
